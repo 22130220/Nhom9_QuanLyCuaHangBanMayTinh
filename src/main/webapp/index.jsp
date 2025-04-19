@@ -25,6 +25,10 @@
     </style>
 </head>
 <body>
+<h1><%= "Hello World!" %>
+    <h2><%= "Hello Công!" %>
+</h2>
+<br/>
 
 <div class="login-container">
     <h2 class="text-center mb-4">Login</h2>
