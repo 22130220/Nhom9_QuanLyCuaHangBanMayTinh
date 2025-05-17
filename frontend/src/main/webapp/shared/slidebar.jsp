@@ -20,9 +20,14 @@
             <span>Thống kê</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/admin/users">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/users">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Quản lý người dùng</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/stockIO">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Quản lý xuất/nhập kho</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
