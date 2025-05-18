@@ -10,9 +10,9 @@ public class StockInItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    private Long productId;
+    private int productId;
 
     private Integer quantity;
 
@@ -24,19 +24,19 @@ public class StockInItem {
     @JoinColumn(name = "stock_in_id")
     private StockIn stockIn;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 

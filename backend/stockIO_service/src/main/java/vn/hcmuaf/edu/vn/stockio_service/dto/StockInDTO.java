@@ -41,4 +41,12 @@ public class StockInDTO {
     public void setItems(List<StockInItemDTO> items) {
         this.items = items;
     }
+
+    public int getCreaterID() {
+        return createrID;
+    }
+
+    public void setCreaterID(int createrID) {
+        this.createrID = createrID;
+    }
 }

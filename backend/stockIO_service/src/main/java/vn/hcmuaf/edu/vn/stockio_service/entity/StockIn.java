@@ -13,7 +13,7 @@ public class StockIn {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private int createrID;
     private Long supplierId;
 
@@ -26,11 +26,11 @@ public class StockIn {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stockIn")
     private List<StockInItem> items = new ArrayList<>();
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -72,6 +72,14 @@ public class StockIn {
 
     public void setItems(List<StockInItem> items) {
         this.items = items;
+    }
+
+    public int getCreaterID() {
+        return createrID;
+    }
+
+    public void setCreaterID(int createrID) {
+        this.createrID = createrID;
     }
 }
 

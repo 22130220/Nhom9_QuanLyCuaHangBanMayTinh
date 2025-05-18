@@ -3,16 +3,16 @@ package vn.hcmuaf.edu.vn.stockio_service.dto;
 import java.math.BigDecimal;
 
 public class StockInItemDTO {
-    private Long productId;
+    private int productId;
     private Integer quantity;
     private BigDecimal unitPrice;
     private String note;
 
-    public Long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 

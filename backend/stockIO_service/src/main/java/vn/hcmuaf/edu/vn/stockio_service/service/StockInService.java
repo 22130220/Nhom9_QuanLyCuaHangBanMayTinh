@@ -1,7 +1,6 @@
 package vn.hcmuaf.edu.vn.stockio_service.service;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import vn.hcmuaf.edu.vn.stockio_service.dto.StockInDTO;
@@ -19,20 +18,17 @@ public class StockInService {
 
     private final StockInRepository stockInRepository;
     private final RestTemplate restTemplate;
-    private final String productServiceUrl;
 
     public StockInService(StockInRepository stockInRepository,
-                          RestTemplate restTemplate,
-                          @Value("${product.service.url}") String productServiceUrl) {
+                          RestTemplate restTemplate) {
         this.stockInRepository = stockInRepository;
         this.restTemplate = restTemplate;
-        this.productServiceUrl = productServiceUrl;
     }
 
     @Transactional
     public void createStockIn(StockInDTO dto) {
         // 13.1.13 - Kiểm tra dữ liệu hợp lệ
-        if (dto.getSupplierId() == null || dto.getCreatedDate() == null) {
+        if (dto.getSupplierId() == 0 || dto.getCreatedDate() == null) {
             throw new IllegalArgumentException("Nhà cung cấp và ngày nhập không được để trống");
         }
         if (dto.getItems() == null || dto.getItems().isEmpty()) {
@@ -47,11 +43,12 @@ public class StockInService {
 
         // 13.1.14 - Tạo mới StockIn
         StockIn stockIn = new StockIn();
+        stockIn.setCreaterID(dto.getCreaterID());
         stockIn.setSupplierId(dto.getSupplierId());
         stockIn.setCreatedDate(dto.getCreatedDate());
         stockIn.setNote(dto.getNote());
 
-        // 13.1.15 & 13.1.18 - Tạo và gán StockInItem
+        // 13.1.15 - Tạo các StockInItem
         List<StockInItem> items = new ArrayList<>();
         BigDecimal totalAmount = BigDecimal.ZERO;
 
@@ -68,32 +65,16 @@ public class StockInService {
             BigDecimal itemTotal = itemDTO.getUnitPrice().multiply(BigDecimal.valueOf(itemDTO.getQuantity()));
             totalAmount = totalAmount.add(itemTotal);
         }
-        stockIn.setItems(items);
-
         // 13.1.17 - Lưu tổng tiền vào StockIn
         stockIn.setTotalAmount(totalAmount);
+
+        // 13.1.18 - Gán danh sách StockInItem vào StockIn
+        stockIn.setItems(items);
 
         // 13.1.19 - Lưu StockIn vào DB
         stockInRepository.save(stockIn);
 
         // 13.1.20 - Gọi product-service cập nhật tồn kho
-        for (StockInItem item : items) {
-            String url = productServiceUrl + "/api/products/" + item.getProductId() + "/stock";
-            StockUpdateRequest request = new StockUpdateRequest(item.getQuantity());
-            restTemplate.put(url, request);
-        }
-    }
-
-    // Class cho request cập nhật tồn kho
-    public static class StockUpdateRequest {
-        private int quantity;
-
-        public StockUpdateRequest(int quantity) {
-            this.quantity = quantity;
-        }
-
-        public int getQuantity() { return quantity; }
-        public void setQuantity(int quantity) { this.quantity = quantity; }
     }
 }
 
