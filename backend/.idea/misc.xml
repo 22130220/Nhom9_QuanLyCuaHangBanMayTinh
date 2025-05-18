@@ -3,6 +3,8 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/api_gateway" />
+    <file type="web" url="file://$PROJECT_DIR$/product_service" />
+    <file type="web" url="file://$PROJECT_DIR$/stockIO_service" />
     <file type="web" url="file://$PROJECT_DIR$/user_service" />
   </component>
   <component name="MavenProjectsManager">
@@ -13,6 +15,7 @@
         <option value="$PROJECT_DIR$/user_service/pom.xml" />
         <option value="$PROJECT_DIR$/api_gateway/pom.xml" />
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/stockIO_service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

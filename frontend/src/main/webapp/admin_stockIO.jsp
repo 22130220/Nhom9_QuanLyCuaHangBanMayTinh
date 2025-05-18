@@ -13,6 +13,13 @@
     <!-- Font & CSS -->
     <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        #productTableWrapper {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+    </style>
 </head>
 
 <body id="page-top">
@@ -108,5 +115,84 @@
 
 <!-- Page level custom scripts -->
 <script src="${pageContext.request.contextPath}/js/demo/datatables-demo.js"></script>
+<script>
+    let cachedProducts = null;
+    $('#stockInModal').on('show.bs.modal', function () {
+            $.get('http://localhost:8081/stockIO/api/stock-in', function (data) {
+                renderSuppliers(data);
+            });
+
+            $.get('http://localhost:8081/stockIO/api/stock-in', function (data) {
+                cachedProducts = data;
+                renderProductsForAllRows(data);
+            });
+    });
+
+    function renderSuppliers(data) {
+        const supplierSelect = $('#supplierSelect');
+        supplierSelect.empty();
+        supplierSelect.append('<option value="">-- Chọn nhà cung cấp --</option>');
+        data.forEach(s => {
+            supplierSelect.append($('<option>', {
+                value: s.id,
+                text: s.note || 'Tên nhà cung cấp trống'
+            }));
+        });
+    }
+
+
+    function renderProductsForAllRows(data) {
+        $('.productSelect').each(function () {
+            const select = $(this);
+            select.empty();
+            select.append('<option value="">-- Chọn sản phẩm --</option>');
+            data.forEach(p => {
+                select.append($('<option>', {
+                    value: p.id,
+                    text: p.note || 'Tên sản phẩm trống'
+                }));
+            });
+        });
+    }
+
+
+    const productTableBody = document.getElementById("productTableBody");
+
+    // Tạo 1 dòng sản phẩm mới
+    function createProductRow() {
+        const tr = document.createElement("tr");
+        tr.classList.add("product-row");
+
+        tr.innerHTML =
+            '<td>' +
+            '<select class="form-control productSelect" name="productIds[]" required>' +
+            cachedProducts.map(function(p) {
+                return '<option value="' + p.id + '">' + p.note + '</option>';
+            }).join('') +
+            '</select>' +
+            '</td>' +
+            '<td><input type="number" class="form-control" name="quantities[]" min="1" required></td>' +
+            '<td><input type="number" class="form-control" name="prices[]" min="0" required></td>' +
+            '<td><input type="text" class="form-control" name="notes[]"></td>' +
+            '<td><button type="button" class="btn btn-danger btn-sm" onclick="removeProductRow(this)">&times;</button></td>';
+
+        return tr;
+    }
+
+    // Khi bấm nút + Thêm sản phẩm
+    document.getElementById("addProductBtn").addEventListener("click", () => {
+        productTableBody.appendChild(createProductRow());
+    });
+
+    // Hàm xóa dòng, đảm bảo ít nhất 1 dòng
+    function removeProductRow(button) {
+        const rows = productTableBody.querySelectorAll(".product-row");
+        if (rows.length >= 1) {
+            button.closest("tr").remove();
+        } else {
+            alert("Cần ít nhất một dòng sản phẩm.");
+        }
+    }
+</script>
 </body>
 </html>

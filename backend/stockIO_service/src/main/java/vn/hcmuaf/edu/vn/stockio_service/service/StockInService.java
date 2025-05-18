@@ -43,9 +43,9 @@ public class StockInService {
 
         // 13.1.14 - Tạo mới StockIn
         StockIn stockIn = new StockIn();
-        stockIn.setCreaterID(dto.getCreaterID());
-        stockIn.setSupplierId(dto.getSupplierId());
-        stockIn.setCreatedDate(dto.getCreatedDate());
+        stockIn.setCreater_id(dto.getCreaterID());
+        stockIn.setSupplier_id(dto.getSupplierId());
+        stockIn.setCreated_date(dto.getCreatedDate());
         stockIn.setNote(dto.getNote());
 
         // 13.1.15 - Tạo các StockInItem
@@ -54,9 +54,9 @@ public class StockInService {
 
         for (StockInItemDTO itemDTO : dto.getItems()) {
             StockInItem item = new StockInItem();
-            item.setProductId(itemDTO.getProductId());
+            item.setProduct_id(itemDTO.getProductId());
             item.setQuantity(itemDTO.getQuantity());
-            item.setUnitPrice(itemDTO.getUnitPrice());
+            item.setUnit_price(itemDTO.getUnitPrice());
             item.setNote(itemDTO.getNote());
             item.setStockIn(stockIn);
             items.add(item);
@@ -66,7 +66,7 @@ public class StockInService {
             totalAmount = totalAmount.add(itemTotal);
         }
         // 13.1.17 - Lưu tổng tiền vào StockIn
-        stockIn.setTotalAmount(totalAmount);
+        stockIn.setTotal_amount(totalAmount);
 
         // 13.1.18 - Gán danh sách StockInItem vào StockIn
         stockIn.setItems(items);
@@ -75,6 +75,10 @@ public class StockInService {
         stockInRepository.save(stockIn);
 
         // 13.1.20 - Gọi product-service cập nhật tồn kho
+    }
+
+    public List<StockIn> getAllStockIn() {
+        return stockInRepository.findAll();
     }
 }
 
