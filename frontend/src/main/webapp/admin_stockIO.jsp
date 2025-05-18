@@ -40,9 +40,9 @@
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-primary">Danh sách Xuất Nhập Kho</h6>
                         <jsp:include page="shared/modal_stockIn.jsp"/>
-                        <!-- Nút mở modal -->
+                        <!-- 13.1.1 - Người dùng nhấn nút "Thêm nhập kho" -->
                         <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#stockInModal">
-                            + Nhập kho
+                            + Thêm nhập kho
                         </button>
                     </div>
                     <div class="card-body">
@@ -50,44 +50,15 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Mã giao dịch</th>
-                                    <th>Loại</th>
-                                    <th>Sản phẩm</th>
-                                    <th>Số lượng</th>
-                                    <th>Đơn giá</th>
-                                    <th>Ngày giao dịch</th>
+                                    <th>Mã số</th>
+                                    <th>Người thực hiện</th>
+                                    <th>Ngày thực hiện</th>
+                                    <th>Nhà cung cấp</th>
                                     <th>Ghi chú</th>
                                     <th>Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>TXK001</td>
-                                    <td><span class="badge badge-danger">Xuất kho</span></td>
-                                    <td>Chuột Logitech M185</td>
-                                    <td>5</td>
-                                    <td>150,000₫</td>
-                                    <td>2024-05-15</td>
-                                    <td>Xuất cho khách hàng A</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-info">Chi tiết</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Xoá</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>TNK012</td>
-                                    <td><span class="badge badge-success">Nhập kho</span></td>
-                                    <td>Bàn phím cơ DareU EK87</td>
-                                    <td>10</td>
-                                    <td>550,000₫</td>
-                                    <td>2024-05-12</td>
-                                    <td>Nhập từ nhà cung cấp B</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-info">Chi tiết</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Xoá</a>
-                                    </td>
-                                </tr>
-                                <!-- Thêm các dòng dữ liệu từ backend -->
                                 </tbody>
                             </table>
                         </div>
@@ -99,6 +70,77 @@
     </div>
 </div>
 
+<!-- Modal Nhập Kho -->
+<div class="modal fade" id="stockInModal" tabindex="-1" aria-labelledby="stockInModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <form action="stock-in" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="stockInModalLabel">Phiếu Nhập Kho</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+                    <!-- Thông tin chung -->
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label>Người thực hiện</label>
+                            <input type="text" class="form-control" name="createdBy" value="${currentUser}" required readonly>
+                        </div>
+
+                        <!-- 13.1.6 - Người dùng nhấn vào ô chọn nhà cung cấp và chọn nhà cung cấp từ dropdown. -->
+                        <div class="col-md-4">
+                            <label>Nhà cung cấp</label>
+                            <select class="form-control" name="supplierId" id="supplierSelect" required>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Ngày nhập</label>
+                            <input type="date" class="form-control" name="createdDate" value="${today}" required>
+                        </div>
+                    </div>
+
+                    <!-- 13.1.7 Người dùng điền các thông tin: ngày nhập, ghi chú. -->
+                    <div class="mb-3">
+                        <label>Ghi chú</label>
+                        <textarea class="form-control" name="note" rows="2"></textarea>
+                    </div>
+
+                    <!-- 13.1.10 Người dùng chọn sản phẩm từ dropdown và điền số lượng đơn giá, ghi chú cho sản phẩm. -->
+                    <h6>Danh sách sản phẩm</h6>
+                    <div class="table-responsive" id="productTableWrapper">
+                        <table class="table table-bordered align-middle text-center" id="productTable">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Đơn giá</th>
+                                <th>Ghi chú</th>
+                                <th>Thao tác</th>
+                            </tr>
+                            </thead>
+                            <tbody id="productTableBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 13.1.8 Người dùng nhấn nút “ + Thêm sản phẩm”.-->
+                    <button type="button" class="btn btn-secondary mt-2" id="addProductBtn">+ Thêm sản phẩm</button>
+
+                    <div class="modal-footer">
+                        <!--13.1.11 Người dùng nhấn nút “Lưu”. -->
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- Bootstrap core JavaScript-->
 <script src="${pageContext.request.contextPath}/vendor/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -115,84 +157,7 @@
 
 <!-- Page level custom scripts -->
 <script src="${pageContext.request.contextPath}/js/demo/datatables-demo.js"></script>
-<script>
-    let cachedProducts = null;
-    $('#stockInModal').on('show.bs.modal', function () {
-            $.get('http://localhost:8081/stockIO/api/stock-in', function (data) {
-                renderSuppliers(data);
-            });
+<script src="${pageContext.request.contextPath}/js/stock/stockIO.js"></script>
 
-            $.get('http://localhost:8081/stockIO/api/stock-in', function (data) {
-                cachedProducts = data;
-                renderProductsForAllRows(data);
-            });
-    });
-
-    function renderSuppliers(data) {
-        const supplierSelect = $('#supplierSelect');
-        supplierSelect.empty();
-        supplierSelect.append('<option value="">-- Chọn nhà cung cấp --</option>');
-        data.forEach(s => {
-            supplierSelect.append($('<option>', {
-                value: s.id,
-                text: s.note || 'Tên nhà cung cấp trống'
-            }));
-        });
-    }
-
-
-    function renderProductsForAllRows(data) {
-        $('.productSelect').each(function () {
-            const select = $(this);
-            select.empty();
-            select.append('<option value="">-- Chọn sản phẩm --</option>');
-            data.forEach(p => {
-                select.append($('<option>', {
-                    value: p.id,
-                    text: p.note || 'Tên sản phẩm trống'
-                }));
-            });
-        });
-    }
-
-
-    const productTableBody = document.getElementById("productTableBody");
-
-    // Tạo 1 dòng sản phẩm mới
-    function createProductRow() {
-        const tr = document.createElement("tr");
-        tr.classList.add("product-row");
-
-        tr.innerHTML =
-            '<td>' +
-            '<select class="form-control productSelect" name="productIds[]" required>' +
-            cachedProducts.map(function(p) {
-                return '<option value="' + p.id + '">' + p.note + '</option>';
-            }).join('') +
-            '</select>' +
-            '</td>' +
-            '<td><input type="number" class="form-control" name="quantities[]" min="1" required></td>' +
-            '<td><input type="number" class="form-control" name="prices[]" min="0" required></td>' +
-            '<td><input type="text" class="form-control" name="notes[]"></td>' +
-            '<td><button type="button" class="btn btn-danger btn-sm" onclick="removeProductRow(this)">&times;</button></td>';
-
-        return tr;
-    }
-
-    // Khi bấm nút + Thêm sản phẩm
-    document.getElementById("addProductBtn").addEventListener("click", () => {
-        productTableBody.appendChild(createProductRow());
-    });
-
-    // Hàm xóa dòng, đảm bảo ít nhất 1 dòng
-    function removeProductRow(button) {
-        const rows = productTableBody.querySelectorAll(".product-row");
-        if (rows.length >= 1) {
-            button.closest("tr").remove();
-        } else {
-            alert("Cần ít nhất một dòng sản phẩm.");
-        }
-    }
-</script>
 </body>
 </html>

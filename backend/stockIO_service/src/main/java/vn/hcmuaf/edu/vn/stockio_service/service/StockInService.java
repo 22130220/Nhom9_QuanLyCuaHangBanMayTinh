@@ -16,14 +16,9 @@ import java.util.List;
 @Service
 public class StockInService {
 
-    private final StockInRepository stockInRepository;
-    private final RestTemplate restTemplate;
+    private StockInRepository stockInRepository;
 
-    public StockInService(StockInRepository stockInRepository,
-                          RestTemplate restTemplate) {
-        this.stockInRepository = stockInRepository;
-        this.restTemplate = restTemplate;
-    }
+    private InventoryService inventoryService;
 
     @Transactional
     public void createStockIn(StockInDTO dto) {
@@ -74,7 +69,11 @@ public class StockInService {
         // 13.1.19 - Lưu StockIn vào DB
         stockInRepository.save(stockIn);
 
-        // 13.1.20 - Gọi product-service cập nhật tồn kho
+        // 13.1.20 - Gọi InventoryService để cập nhật tồn kho
+        for (StockInItem item : items) {
+            inventoryService.increaseQuantity(item.getProduct_id(), item.getQuantity());
+        }
+
     }
 
     public List<StockIn> getAllStockIn() {
