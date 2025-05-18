@@ -13,7 +13,7 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
+    <!-- 1.1.1. Hệ thống đang ở màn hình bất kì mà có thể thị thanh slidebar bên tay trái chứa các menu điều hướng  -->
     <li class="nav-item">
         <a class="nav-link" href="/">
             <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -28,6 +28,11 @@
         <a class="nav-link" href="${pageContext.request.contextPath}/admin/stockIO">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Quản lý xuất/nhập kho</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/employees"> <!-- 1.1.2. Người dùng chọn chức năng “Quản lý nhân viên”ở trong menu bên trái.-->
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Quản lý nhân viên</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
