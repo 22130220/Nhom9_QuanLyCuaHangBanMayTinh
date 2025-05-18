@@ -1,0 +1,10 @@
+server:
+  port: 9090
+spring:
+  application:
+    name: stockIO_service
+  datasource:
+    url: jdbc:mysql://134.209.106.84:3306/pc_api
+    username: 'root'
+    password: '@abc123456'
+    driver-class-name: com.mysql.cj.jdbc.Driver

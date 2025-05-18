@@ -31,7 +31,7 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    <jsp:include page="${pageContext.request.contextPath}/shared/slidebar.jsp"/>
+    <jsp:include page="shared/slidebar.jsp"/>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -39,7 +39,7 @@
         <!-- Main Content -->
         <div id="content">
 
-            <jsp:include page="${pageContext.request.contextPath}/shared/header.jsp"/>
+            <jsp:include page="shared/header.jsp"/>
 
             <!-- Begin Page Content -->
             <!-- Begin Page Content -->
