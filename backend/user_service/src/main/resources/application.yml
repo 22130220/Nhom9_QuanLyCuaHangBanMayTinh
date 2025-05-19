@@ -8,3 +8,21 @@ spring:
     username: 'root'
     password: '@abc123456'
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

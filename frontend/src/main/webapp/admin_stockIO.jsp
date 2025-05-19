@@ -32,7 +32,7 @@
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-primary">Danh sách Xuất Nhập Kho</h6>
-                        <jsp:include page="shared/modal_stockIn.jsp"/>
+<%--                        <jsp:include page="shared/modal_stockIn.jsp"/>--%>
                         <!-- Nút mở modal -->
                         <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#stockInModal">
                             + Nhập kho

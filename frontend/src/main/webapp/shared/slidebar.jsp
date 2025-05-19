@@ -34,6 +34,11 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Quản lý nhân viên</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/customers">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Quản lý khách hàng</span></a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
 
