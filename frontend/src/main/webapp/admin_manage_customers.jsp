@@ -190,17 +190,19 @@
                 this.fetchData();
             },
             fetchData() {
-                axios.get('http://localhost:8080/api/customers')
+                axios.get('http://localhost:8081/users/api/customers')
                     .then(response => {
                         // response.data là ApiResponse, dữ liệu thực tế nằm trong response.data.data
-                        const data = response.data.data;
+                        const data = response.data;
 
                         const formattedData = data.map(cust => ([
                             cust.id,
                             cust.fullName,
                             cust.email || '',
                             cust.phoneNumber,
-                            cust.address || ''
+                            cust.address || '',
+                            cust.createdAt,
+                            cust.updatedAt,
                         ]));
 
                         this.$nextTick(() => {
@@ -214,7 +216,9 @@
                                         {title: "Họ và tên"},
                                         {title: "Email"},
                                         {title: "Điện thoại"},
-                                        {title: "Địa chỉ"}
+                                        {title: "Địa chỉ"},
+                                        {title: "Thời gian tạo"},
+                                        {title: "Thời gian cập nhật"},
                                     ]
                                 });
                             }
@@ -250,7 +254,7 @@
                 this.error = '';
 
                 try {
-                    await axios.post('http://localhost:8080/api/customers', {
+                    await axios.post('http://localhost:8081/users/api/customers', {
                         fullName: this.form.fullName,
                         email: this.form.email,
                         phoneNumber: this.form.phoneNumber,
