@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  user-service:
+    build: ./backend/user_service
+    container_name: user-service
+    ports:
+      - "9091:9091"
+    networks:
+      - app-net
+
+  product-service:
+    build: ./backend/product_service
+    container_name: product-service
+    ports:
+      - "9090:9090"
+    networks:
+      - app-net
+
+  order-service:
+    build: ./backend/order_service
+    container_name: order-service
+    ports:
+      - "9092:9092"
+    networks:
+      - app-net
+
+  gateway:
+    build: ./backend/gateway
+    container_name: gateway
+    ports:
+      - "8081:8081"
+    networks:
+      - app-net
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-net
+    depends_on:
+      - gateway
+
+networks:
+  app-net:
+    driver: bridge
