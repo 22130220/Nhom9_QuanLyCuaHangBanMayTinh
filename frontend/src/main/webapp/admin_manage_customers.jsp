@@ -46,7 +46,6 @@
                 <jsp:include page="shared/header.jsp"/>
 
                 <!-- Begin Page Content -->
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
@@ -60,7 +59,8 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                            <button type="button" class="btn btn-primary" x-on:click="openFormModal">+ Thêm khách hàng</button> <!--  1.1.7. Người dùng chọn nút “+ Thêm nhân viên” ở phía trên table có màu xanh dương. -->
+                            <button type="button" class="btn btn-primary" x-on:click="openFormModal">+ Thêm khách hàng</button>
+                            <!-- Tương ứng 7.1.0: POST /api/customers (CustomerDTO) khi submit form -->
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -156,7 +156,7 @@
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" @click="openModal = false">Hủy</button>
-                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            <button type="submit" class="btn btn-primary">Thêm</button>
                         </div>
                     </form>
                 </div>
@@ -260,9 +260,12 @@
                         phoneNumber: this.form.phoneNumber,
                         address: this.form.address
                     });
+                    // 7.1.0 gửi POST /api/customers với CustomerDTO gồm fullName, phoneNumber, email, address
 
                     alert("Thêm khách hàng thành công!");
+                    // 7.1.20 Hiển thị alert "Thêm khách hàng thành công"
                     this.openModal = false;
+                    // Đóng modal sau khi thêm thành công
 
                     // Reset form
                     this.form = {
@@ -274,6 +277,7 @@
 
                     if (window.$ && $('#dataTable').DataTable) {
                         this.fetchData();
+                        // 7.1.20 load lại danh sách sau khi thêm thành công
                     }
                 } catch (err) {
                     console.error(err);

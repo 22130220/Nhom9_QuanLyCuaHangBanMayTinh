@@ -25,15 +25,19 @@ public class CustomerController {
 
     // API thêm khách hàng
     @PostMapping
+    // 7.1.0 Nhận POST /api/customers với CustomerDTO
+    // 7.1.1  @PostMapping addCustomer(@Valid CustomerDTO)  @Valid kiểm tra NotBlank, Email, Pattern
+    // 7.1.2 Gọi service xử lý nghiệp vụ thêm khách hàng
     public ResponseEntity<ApiResponse> addCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         CustomerDTO savedCustomer = customerService.addCustomer(customerDTO);
-
         ApiResponse response = new ApiResponse(
+            //    7.1.19 Tạo ApiResponse(success=true, message, data=CustomerDTO) - Service tạo response thành công
                 true,
                 "Thêm khách hàng thành công",
                 savedCustomer
         );
-
+        // 7.1.20 Tạo ApiResponse trả về client thông báo thành công
+       // 7.1.20 Hiển thị alert "Thêm khách hàng thành công" Đóng modal, load lại danh sách - Giao diện người dùng hiển thị thông báo thành công và cập nhật danh sách
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -42,6 +46,7 @@ public class CustomerController {
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
+
 //    @GetMapping
 //    public ResponseEntity<ApiResponse> getAllCustomers() {
 //        List<CustomerDTO> customers = customerService.getAllCustomers();
@@ -70,20 +75,19 @@ public class CustomerController {
     }
 
     // API cập nhật thông tin khách hàng
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateCustomer(
-            @PathVariable Long id,
-            @Valid @RequestBody CustomerDTO customerDTO) {
-
-        CustomerDTO updatedCustomer = customerService.updateCustomer(id, customerDTO);
-
-        ApiResponse response = new ApiResponse(
-                true,
-                "Cập nhật thông tin khách hàng thành công",
-                updatedCustomer
-        );
-
-        return ResponseEntity.ok(response);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<ApiResponse> updateCustomer(
+//            @PathVariable Long id,
+//            @Valid @RequestBody CustomerDTO customerDTO) {
+//
+//        CustomerDTO updatedCustomer = customerService.updateCustomer(id, customerDTO);
+//
+//        ApiResponse response = new ApiResponse(
+//                true,
+//                "Cập nhật thông tin khách hàng thành công",
+//                updatedCustomer
+//        );
+//
+//        return ResponseEntity.ok(response);
+//    }
 }
-

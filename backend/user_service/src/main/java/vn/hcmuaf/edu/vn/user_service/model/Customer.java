@@ -21,18 +21,18 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 7.1.1 Validate input (@Valid)  @Valid kiểm tra NotBlank, Email, Pattern
+    // 7.1.1 Validate input (@Valid)  @Valid kiểm tra NotBlank với fullName
     @NotBlank(message = "Họ tên không được để trống")
     @Column(nullable = false)
     private String fullName;
 
-    // 7.1.1 Validate input (@Valid)  @Valid kiểm tra NotBlank, Email, Pattern
+    // 7.1.1 Validate input (@Valid)  @Valid kiểm tra NotBlank, Pattern với phoneNumber
     @NotBlank(message = "Số điện thoại không được để trống")
     @Pattern(regexp = "^\\d{10,11}$", message = "Số điện thoại không hợp lệ")
     @Column(nullable = false, unique = true)
     private String phoneNumber;
 
-    // 7.1.1 Validate input (@Valid)  @Valid kiểm tra NotBlank, Email, Pattern
+    // 7.1.1 Validate input (@Valid)  @Valid kiểm tra Email với email
     @Email(message = "Email không hợp lệ")
     @Column(unique = true)
     private String email;
@@ -40,13 +40,13 @@ public class Customer {
     private String address;
 
     @Column(name = "created_at")
-
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // 7.1.17 Create new Customer
+
+  //  7.1.12 new Customer(...) - Tạo đối tượng Customer entity mới
     public Customer() {}
 
     public Customer(Long id, String fullName, String phoneNumber, String email, String address, LocalDateTime createdAt, LocalDateTime updatedAt) {
@@ -59,6 +59,7 @@ public class Customer {
         this.updatedAt = updatedAt;
     }
 
+    // Getter & Setter các trường dữ liệu
     public Long getId() {
         return id;
     }
@@ -117,12 +118,14 @@ public class Customer {
 
     @PrePersist
     protected void onCreate() {
+        // Tự động set createdAt và updatedAt khi thêm mới
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
+        // Cập nhật lại updatedAt khi sửa
         this.updatedAt = LocalDateTime.now();
     }
 }
