@@ -9,7 +9,7 @@ import vn.hcmuaf.edu.vn.stockio_service.repository.InventoryRepository;
 public class InventoryService {
     @Autowired
     private InventoryRepository inventoryRepository;
-    // 13.1.21 - Gọi InventoryRepository để lưu vào database
+    // 13.1.22 - Gọi InventoryRepository để lưu vào database
     public void increaseQuantity(Long productId, int quantity) {
         Inventory inventory = inventoryRepository.findByProductId(productId)
                 .orElseGet(() -> new Inventory(productId, 0));

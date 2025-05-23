@@ -1,5 +1,6 @@
 package vn.hcmuaf.edu.vn.stockio_service.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.hcmuaf.edu.vn.stockio_service.entity.Supplier;
 import vn.hcmuaf.edu.vn.stockio_service.repository.SupplierRepository;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class SupplierService {
+    @Autowired
     private SupplierRepository supplierRepository;
 
     public List<Supplier> getAllSuppliers() {

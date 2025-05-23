@@ -16,7 +16,15 @@ public class Product {
 
     private BigDecimal price;
 
-    // getters và setters
+    public Product(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Product() {
+
+    }
+
     public Long getId() {
         return id;
     }

@@ -25,7 +25,7 @@ public class StockInController {
     @PostMapping
     public ResponseEntity<?> createStockIn(@RequestBody StockInDTO dto) {
         try{
-            // 13.1.12 StockInController gọi StockInService để tạo mới phiếu nhập kho
+            // 13.1.13 StockInController gọi StockInService để tạo mới phiếu nhập kho
             stockInService.createStockIn(dto);
             // 13.1.22 Trả về thông báo "Nhập kho thành công"
             return ResponseEntity.ok("Nhập kho thành công");
@@ -36,5 +36,3 @@ public class StockInController {
         }
     }
 }
-
- 

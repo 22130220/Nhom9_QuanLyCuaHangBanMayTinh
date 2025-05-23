@@ -12,8 +12,8 @@ public class StockInItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private Long product_id;
+    @Column(name = "product_id")
+    private Long productId;
     private Integer quantity;
 
     private BigDecimal unit_price;
@@ -33,12 +33,12 @@ public class StockInItem {
         this.id = id;
     }
 
-    public Long getProduct_id() {
-        return product_id;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(Long product_id) {
-        this.product_id = product_id;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Integer getQuantity() {

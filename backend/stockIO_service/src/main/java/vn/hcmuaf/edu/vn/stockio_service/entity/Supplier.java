@@ -16,6 +16,8 @@ public class Supplier {
 
     // Constructors
     public Supplier(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Supplier(String name, String phone, String email) {

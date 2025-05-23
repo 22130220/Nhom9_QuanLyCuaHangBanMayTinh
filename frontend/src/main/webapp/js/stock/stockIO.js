@@ -1,3 +1,33 @@
+$(document).ready(function () {
+    $.ajax({
+        url: '/api/stock-in',
+        method: 'GET',
+        success: function (data) {
+            let tbody = $('#dataTable tbody');
+            tbody.empty();
+
+            data.forEach(function (item) {
+                let row = `
+                        <tr>
+                            <td>${item.id}</td>
+                            <td>${item.executor}</td>
+                            <td>${item.executionDate}</td>
+                            <td>${item.supplierName}</td>
+                            <td>${item.note || ''}</td>
+                            <td>
+                                <button class="btn btn-info btn-sm">Xem</button>
+                                <button class="btn btn-danger btn-sm">Xóa</button>
+                            </td>
+                        </tr>`;
+                tbody.append(row);
+            });
+        },
+        error: function (err) {
+            alert("Không thể tải danh sách!");
+            console.log(err);
+        }
+    });
+});
 let cachedProducts = null;
 
 // 13.1.2 - Hiển thị form
@@ -92,32 +122,32 @@ $('#stockInForm').on('submit', function(e) {
         let unitPrice = $(this).find('input.unitPriceInput').val();
         let itemNote = $(this).find('input.itemNoteInput').val();
 
-        if (productId && quantity && unitPrice) {
-            if (quantity <= 0) {
-                alert(`Số lượng không hợp lệ ở dòng ${index + 1}`);
-                return false;
-            }
-            if (unitPrice <= 0) {
-                alert(`Đơn giá không hợp lệ ở dòng ${index + 1}`);
-                return false;
-            }
+        // if (productId && quantity && unitPrice) {
+        //     if (quantity <= 0) {
+        //         alert(`Số lượng không hợp lệ ở dòng ${index + 1}`);
+        //         return false;
+        //     }
+        //     if (unitPrice <= 0) {
+        //         alert(`Đơn giá không hợp lệ ở dòng ${index + 1}`);
+        //         return false;
+        //     }
             items.push({
                 productId: parseInt(productId),
                 quantity: parseInt(quantity),
                 unitPrice: parseFloat(unitPrice),
                 note: itemNote || ''
             });
-        }
+        // }
     });
-    if (!createdBy || !supplierId || !createdDate) {
-        alert('Vui lòng điền đầy đủ thông tin người thực hiện, nhà cung cấp và ngày nhập.');
-        return;
-    }
-
-    if (items.length === 0) {
-        alert('Vui lòng thêm ít nhất một sản phẩm hợp lệ để nhập kho.');
-        return;
-    }
+    // if (!createdBy || !supplierId || !createdDate) {
+    //     alert('Vui lòng điền đầy đủ thông tin người thực hiện, nhà cung cấp và ngày nhập.');
+    //     return;
+    // }
+    //
+    // if (items.length === 0) {
+    //     alert('Vui lòng thêm ít nhất một sản phẩm hợp lệ để nhập kho.');
+    //     return;
+    // }
 
 
     // Tạo object dữ liệu gửi lên server
