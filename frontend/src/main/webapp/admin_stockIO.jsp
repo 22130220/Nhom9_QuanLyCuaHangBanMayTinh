@@ -100,6 +100,7 @@
                                     <input type="text" class="form-control" x-model="form.createdBy" readonly>
                                 </div>
 
+                                <!-- 13.1.6 - Người dùng nhấn vào ô chọn nhà cung cấp và chọn nhà cung cấp từ dropdown. -->
                                 <div class="col-md-4">
                                     <label class="form-label">Nhà cung cấp</label>
                                     <select class="form-control" x-model="form.supplierId" required>
@@ -110,6 +111,7 @@
                                     </select>
                                 </div>
 
+                                <!-- 13.1.7 Người dùng điền các thông tin: ngày nhập, ghi chú. -->
                                 <div class="col-md-4">
                                     <label class="form-label">Ngày nhập</label>
                                     <input type="date" class="form-control" x-model="form.createdDate" required>
@@ -120,6 +122,7 @@
                                 <label class="form-label">Ghi chú</label>
                                 <textarea class="form-control" rows="2" x-model="form.note"></textarea>
                             </div>
+
 
                             <h6>Danh sách sản phẩm</h6>
                             <div class="table-responsive" id="productTableWrapper">
@@ -134,6 +137,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <!-- 13.1.10 Người dùng chọn sản phẩm từ dropdown và điền số lượng đơn giá, ghi chú cho sản phẩm. -->
                                     <template x-for="(item, index) in form.products" :key="index">
                                         <tr>
                                             <td>
@@ -161,11 +165,13 @@
                                 </table>
                             </div>
 
+                            <!-- 13.1.8 Người dùng nhấn nút “ + Thêm sản phẩm”.-->
                             <button type="button" class="btn btn-secondary mt-2" @click="addProduct">+ Thêm sản phẩm
                             </button>
                         </div>
 
                         <div class="modal-footer">
+                            <!--13.1.11 Người dùng nhấn nút “Lưu”. -->
                             <button type="submit" class="btn btn-primary">Lưu</button>
                             <button type="button" class="btn btn-secondary" @click="openModal = false">Đóng</button>
                         </div>
@@ -192,7 +198,6 @@
 
     <!-- Page level custom scripts -->
     <script src="${pageContext.request.contextPath}/js/demo/datatables-demo.js"></script>
-    <%--<script src="${pageContext.request.contextPath}/js/stock/stockIO.js"></script>--%>
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('datatableComponent', () => ({
@@ -247,8 +252,10 @@
                         });
                 },
                 async openFormModal() {
-                    console.log("Mở modal");
+                    // 13.1.2 - Hiển thị form
                     this.openModal = true;
+
+                    // 13.1.5 - Gán dữ liệu vào modal
                     this.loadSuppliers();
                     this.loadProducts();
                     this.form.createdBy = 1;
@@ -260,19 +267,23 @@
                     return today.toISOString().split('T')[0];
                 },
 
+                // 13.1.4. Hệ thống gọi SupplierController từ "http://localhost:8081/stockIO/api/suppliers" để lấy danh sách nhà cung cấp.
                 loadSuppliers() {
                     axios.get('http://localhost:8081/stockIO/api/suppliers')
                         .then(response => {
                             this.suppliers = response.data;
                         })
                 },
+                // 13.1.3 Hệ thống gọi ProductController từ "http://localhost:8081/product/api/products" để lấy danh sách sản phẩm.
                 loadProducts() {
                     axios.get('http://localhost:8081/product/api/products')
                         .then(response => {
+
                             this.products = response.data;
                         })
                 },
 
+                // 13.1.9  - Hệ thống thêm một dòng mới vào bảng
                 addProduct() {
                     this.form.products.push({productId: '', quantity: 1, price: 0, note: ''});
                 },
@@ -281,6 +292,7 @@
                     this.form.products.splice(index, 1);
                 },
 
+                // 13.1.12 Hệ thống gửi dữ liệu lên StockInController để tạo nhập kho mới.
                 submitStockInForm() {
                     const payload = {
                         createdBy: this.form.createdBy,
@@ -296,6 +308,7 @@
                     };
                     console.log(payload);
 
+                    // Gửi
                     axios.post('http://localhost:8081/stockIO/api/stock-in', payload)
                         .then(response => {
                             alert(response);
