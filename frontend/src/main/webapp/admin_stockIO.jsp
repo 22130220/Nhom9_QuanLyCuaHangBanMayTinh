@@ -40,7 +40,7 @@
                     <div class="card-header py-3 d-flex justify-content-between align-items-center">
                         <h6 class="m-0 font-weight-bold text-primary">Danh sách Xuất Nhập Kho</h6>
                         <jsp:include page="shared/modal_stockIn.jsp"/>
-                        <!-- 13.1.1 - Người dùng nhấn nút "Thêm nhập kho" -->
+
                         <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#stockInModal">
                             + Thêm nhập kho
                         </button>
