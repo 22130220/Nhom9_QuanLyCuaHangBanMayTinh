@@ -1,7 +1,8 @@
 package vn.hcmuaf.edu.vn.stockio_service.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "suppliers")
 public class Supplier {

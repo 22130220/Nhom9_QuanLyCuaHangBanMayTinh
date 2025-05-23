@@ -24,16 +24,19 @@ public class StockInService {
     @Transactional
     public void createStockIn(StockInDTO dto) {
         // 13.1.14 - Kiểm tra dữ liệu hợp lệ
-        if (dto.getSupplierId() == 0 || dto.getCreatedDate() == null) {
-            throw new IllegalArgumentException("Nhà cung cấp và ngày nhập không được để trống");
-        }
         if (dto.getItems() == null || dto.getItems().isEmpty()) {
+            //13.3.0 – Khi không có sản phẩm nhập kho.
+            //13.3.1 – StockInService trả về “Phải có ít nhất một sản phẩm”
             throw new IllegalArgumentException("Phải có ít nhất một sản phẩm");
         }
         for (StockInItemDTO item : dto.getItems()) {
             if (item.getQuantity() == null || item.getQuantity() <= 0)
+                //13.4.0 - Khi nhập số lượng nhỏ hơn 0:
+                //13.4.1 - StockInService trả về “Số lượng phải lớn hơn 0”.
                 throw new IllegalArgumentException("Số lượng phải lớn hơn 0");
             if (item.getUnitPrice() == null || item.getUnitPrice().compareTo(BigDecimal.ZERO) <= 0)
+                //13.5.0 - Khi nhập đơn giá nhỏ hơn 0:
+                //13.5.1 - StockInService trả về “Đơn giá phải lớn hơn 0”.
                 throw new IllegalArgumentException("Đơn giá phải lớn hơn 0");
         }
 

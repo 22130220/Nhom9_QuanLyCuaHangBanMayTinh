@@ -15,6 +15,10 @@ public class StockIn {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int creater_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "supplier_id", insertable = false, updatable = false)
+    private Supplier supplier;
     private Long supplier_id;
 
     private LocalDate created_date;
@@ -80,6 +84,14 @@ public class StockIn {
 
     public void setItems(List<StockInItem> items) {
         this.items = items;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 }
 
