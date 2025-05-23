@@ -17,7 +17,7 @@ public class CustomerDTO {
     private String fullName;
 
     @NotBlank(message = "Số điện thoại không được để trống")
-    @Pattern(regexp = "^\\d{10,11}$", message = "Số điện thoại không hợp lệ")
+    @Pattern(regexp = "^\\d{10,11}$", message = "Số điện thoại gồm 10 hoặc 11 chữ số và ko có chữ cái")
     private String phoneNumber;
 
     @Email(message = "Email không hợp lệ")

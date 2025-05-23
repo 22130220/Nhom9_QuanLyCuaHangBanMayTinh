@@ -11,7 +11,6 @@
     <groupId>vn.hcmuaf.edu.vn</groupId>
     <artifactId>stockIO_service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
     <name>stockIO_service</name>
     <description>stockIO_service</description>
     <url/>

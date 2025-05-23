@@ -50,16 +50,11 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                                                                                   href="https://datatables.net">official
-                            DataTables documentation</a>.</p>
+                    <h1 class="h3 mb-2 text-gray-800">Quản lý nhân viên</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                             <button type="button" class="btn btn-primary" x-on:click="openFormModal">+ Thêm nhân viên</button> <!--  1.1.7. Người dùng chọn nút “+ Thêm nhân viên” ở phía trên table có màu xanh dương. -->
                         </div>
                         <div class="card-body">
