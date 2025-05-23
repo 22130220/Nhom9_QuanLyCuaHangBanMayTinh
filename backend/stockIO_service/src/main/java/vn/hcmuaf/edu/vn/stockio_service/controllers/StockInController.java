@@ -27,8 +27,11 @@ public class StockInController {
         try{
             // 13.1.13 StockInController gọi StockInService để tạo mới phiếu nhập kho
             stockInService.createStockIn(dto);
-            // 13.1.22 Trả về thông báo "Nhập kho thành công"
+            // 13.1.23 StockInController trả về thông báo "Nhập kho thành công"
             return ResponseEntity.ok("Nhập kho thành công");
+
+
+            //13.3.2 = 13.4.2  - 13.5.2  – StockInController trả về thông báo và status 400 (Bad request)
         } catch (IllegalArgumentException ex) {
             Map<String, String> error = new HashMap<>();
             error.put("error", ex.getMessage());

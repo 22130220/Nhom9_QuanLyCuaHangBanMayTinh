@@ -93,11 +93,15 @@
                         </div>
 
                         <div class="modal-body">
+                            <template x-if="error">
+                                <div class="alert alert-danger" x-text="error"></div>
+                            </template>
                             <!-- Thông tin chung -->
                             <div class="row mb-3">
+                                <input type="hidden" x-model="form.createdBy">
                                 <div class="col-md-4">
                                     <label class="form-label">Người thực hiện</label>
-                                    <input type="text" class="form-control" x-model="form.createdBy" readonly>
+                                    <input type="text" class="form-control" :value="form.createdByName" readonly>
                                 </div>
 
                                 <!-- 13.1.6 - Người dùng nhấn vào ô chọn nhà cung cấp và chọn nhà cung cấp từ dropdown. -->
@@ -155,6 +159,7 @@
                                                        required></td>
                                             <td><input type="text" class="form-control" x-model="item.note"></td>
                                             <td>
+                                                <!--13.2.1 Người dùng nhấn nút “Xóa” ở dòng sản phẩm muốn xóa-->
                                                 <button type="button" class="btn btn-danger btn-sm"
                                                         @click="removeProduct(index)">X
                                                 </button>
@@ -201,11 +206,13 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('datatableComponent', () => ({
+                error: '',
                 openModal: false,
                 suppliers: [],
                 products: [],
                 form: {
                     createdBy: '',
+                    createdByName: '',
                     supplierId: '',
                     createdDate: '',
                     note: '',
@@ -226,7 +233,7 @@
                                 si.id,
                                 si.creater_id,
                                 si.created_date,
-                                si.supplier_id,
+                                si.supplier.name,
                                 si.note || '',
                             ]));
 
@@ -258,7 +265,8 @@
                     // 13.1.5 - Gán dữ liệu vào modal
                     this.loadSuppliers();
                     this.loadProducts();
-                    this.form.createdBy = 1;
+                    this.form.createdBy = 1; // ví dụ mã người thực hiện
+                    this.form.createdByName = 'Nguyễn Văn A' // ví dụ tên người thực hiện
                     this.form.createdDate = this.getTodayDate();
                 },
 
@@ -287,7 +295,7 @@
                 addProduct() {
                     this.form.products.push({productId: '', quantity: 1, price: 0, note: ''});
                 },
-
+                // 13.2.2 Hệ thống loại bỏ dòng khỏi bảng sản phẩm.
                 removeProduct(index) {
                     this.form.products.splice(index, 1);
                 },
@@ -311,20 +319,29 @@
                     // Gửi
                     axios.post('http://localhost:8081/stockIO/api/stock-in', payload)
                         .then(response => {
-                            alert(response);
+                            //13.1.24 Thông báo “Nhập kho thành công”, đóng modal và tải lại danh sách nhập kho.
+                            alert(response.data);
                             this.openModal = false;
                             this.fetchData();
+                            //13.1.25 Reset form ở modal.
                             this.resetForm();
+                            this.error = '';
                         })
                         .catch(error => {
-                            console.error('Lỗi khi lưu phiếu nhập kho:', error);
-                            alert('Có lỗi xảy ra khi lưu phiếu nhập kho!');
+                            // 13.5.3  -  13.3.3  -  13.4.4 – Thông báo lỗi ra modal.
+                            if (error.response && error.response.data && error.response.data.error) {
+                                this.error = error.response.data.error;
+                            } else {
+                                this.error = 'Có lỗi xảy ra khi lưu phiếu nhập kho!';
+                            }
                         });
                 },
 
                 resetForm() {
                     this.form = {
-                        createdBy: 'Tên người dùng hiện tại',
+                        error:'',
+                        createdBy: 1, // ví dụ mã người thực hiện
+                        createdByName: 'Nguyễn Văn A',
                         supplierId: '',
                         createdDate: this.getTodayDate(),
                         note: '',
