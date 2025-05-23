@@ -14,14 +14,14 @@ public class StockIn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int createrID;
-    private Long supplierId;
+    private int creater_id;
+    private Long supplier_id;
 
-    private LocalDate createdDate;
+    private LocalDate created_date;
 
     private String note;
 
-    private BigDecimal totalAmount;
+    private BigDecimal total_amount;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stockIn")
     private List<StockInItem> items = new ArrayList<>();
@@ -34,20 +34,28 @@ public class StockIn {
         this.id = id;
     }
 
-    public Long getSupplierId() {
-        return supplierId;
+    public int getCreater_id() {
+        return creater_id;
     }
 
-    public void setSupplierId(Long supplierId) {
-        this.supplierId = supplierId;
+    public void setCreater_id(int creater_id) {
+        this.creater_id = creater_id;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
+    public Long getSupplier_id() {
+        return supplier_id;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
+    public void setSupplier_id(Long supplier_id) {
+        this.supplier_id = supplier_id;
+    }
+
+    public LocalDate getCreated_date() {
+        return created_date;
+    }
+
+    public void setCreated_date(LocalDate created_date) {
+        this.created_date = created_date;
     }
 
     public String getNote() {
@@ -58,12 +66,12 @@ public class StockIn {
         this.note = note;
     }
 
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
+    public BigDecimal getTotal_amount() {
+        return total_amount;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setTotal_amount(BigDecimal total_amount) {
+        this.total_amount = total_amount;
     }
 
     public List<StockInItem> getItems() {
@@ -72,14 +80,6 @@ public class StockIn {
 
     public void setItems(List<StockInItem> items) {
         this.items = items;
-    }
-
-    public int getCreaterID() {
-        return createrID;
-    }
-
-    public void setCreaterID(int createrID) {
-        this.createrID = createrID;
     }
 }
 

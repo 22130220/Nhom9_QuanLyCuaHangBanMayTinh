@@ -1,5 +1,6 @@
 package vn.hcmuaf.edu.vn.stockio_service.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -11,17 +12,17 @@ public class StockInItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private int productId;
-
+    @Column(name = "product_id")
+    private Long productId;
     private Integer quantity;
 
-    private BigDecimal unitPrice;
+    private BigDecimal unit_price;
 
     private String note;
 
     @ManyToOne
     @JoinColumn(name = "stock_in_id")
+    @JsonIgnore
     private StockIn stockIn;
 
     public int getId() {
@@ -32,11 +33,11 @@ public class StockInItem {
         this.id = id;
     }
 
-    public int getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
@@ -48,12 +49,12 @@ public class StockInItem {
         this.quantity = quantity;
     }
 
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
+    public BigDecimal getUnit_price() {
+        return unit_price;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setUnit_price(BigDecimal unit_price) {
+        this.unit_price = unit_price;
     }
 
     public String getNote() {

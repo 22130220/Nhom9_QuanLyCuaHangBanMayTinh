@@ -1,15 +1,18 @@
 package vn.hcmuaf.edu.vn.stockio_service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDate;
 import java.util.List;
 
 public class StockInDTO {
+    @JsonProperty("createdBy")
     private int createrID;
     private Long supplierId;
     private LocalDate createdDate;
     private String note;
+    @JsonProperty("products")
     private List<StockInItemDTO> items;
-
     public Long getSupplierId() {
         return supplierId;
     }

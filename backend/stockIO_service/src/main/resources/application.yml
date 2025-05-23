@@ -1,5 +1,5 @@
 server:
-  port: 9090
+  port: 9093
 spring:
   application:
     name: stockIO_service
@@ -8,3 +8,4 @@ spring:
     username: 'root'
     password: '@abc123456'
     driver-class-name: com.mysql.cj.jdbc.Driver
+
