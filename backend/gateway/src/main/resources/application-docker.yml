@@ -25,3 +25,9 @@ spring:
             - Path=/orders/**
           filters:
             - StripPrefix=1
+        - id: stockIO_route
+          uri: http://stock-io-service:9093/
+          predicates:
+            - Path=/stockIO/**
+          filters:
+            - StripPrefix=1

@@ -25,6 +25,14 @@ services:
     networks:
       - app-net
 
+  stock-io-service:
+    build: ./backend/stockIO_service
+    container_name: stock-io-service
+    ports:
+      - "9093:9093"
+    networks:
+      - app-net
+
   gateway:
     build: ./backend/gateway
     container_name: gateway

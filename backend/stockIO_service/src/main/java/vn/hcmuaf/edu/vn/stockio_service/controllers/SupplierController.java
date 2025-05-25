@@ -10,7 +10,6 @@ import vn.hcmuaf.edu.vn.stockio_service.service.SupplierService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/suppliers")
 public class SupplierController {
