@@ -49,16 +49,10 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                                                                                   href="https://datatables.net">official
-                            DataTables documentation</a>.</p>
-
+                    <h1 class="h3 mb-2 text-gray-800">Quản lí khách hàng</h1>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
                             <button type="button" class="btn btn-primary" x-on:click="openFormModal">+ Thêm khách hàng</button>
                             <!-- Tương ứng 7.1.0: POST /api/customers (CustomerDTO) khi submit form -->
                         </div>
@@ -190,7 +184,7 @@
                 this.fetchData();
             },
             fetchData() {
-                axios.get('http://localhost:8081/users/api/customers')
+                axios.get('https://api.webtmdt.site/users/api/customers')
                     .then(response => {
                         // response.data là ApiResponse, dữ liệu thực tế nằm trong response.data.data
                         const data = response.data;
@@ -254,7 +248,7 @@
                 this.error = '';
 
                 try {
-                    await axios.post('http://localhost:8081/users/api/customers', {
+                    await axios.post('https://api.webtmdt.site/users/api/customers', {
                         fullName: this.form.fullName,
                         email: this.form.email,
                         phoneNumber: this.form.phoneNumber,
