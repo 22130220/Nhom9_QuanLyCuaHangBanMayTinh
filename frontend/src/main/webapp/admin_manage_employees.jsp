@@ -210,7 +210,7 @@
             // 1.1.5. script được gọi tới http://localhost:8081/users/api/employees với phương thức là Get để lấy ra dữ liệu tát cả employee đang có.
             // 1.1.12 Script gọi lại tới api http://localhost:8081/users/api/employees phương thức GET để lấy ra data vừa mới cập nhật lại và hiển thị lên table.
             fetchData() {
-                axios.get('http://localhost:8081/users/api/employees')
+                axios.get('https://api.webtmdt.site/users/api/employees')
                     .then(response => {
                         const data = response.data;
 
@@ -273,7 +273,7 @@
 
                 try {
                     // Bước 1: Gửi user
-                    const userResponse = await axios.post('http://localhost:8081/users/api/users', {
+                    const userResponse = await axios.post('https://api.webtmdt.site/users/api/users', {
                         username: this.form.username,
                         password: this.form.password,
                         role: "EMPLOYEE"
@@ -282,7 +282,7 @@
                     const userId = userResponse.data.id;
 
                     // Bước 2: Gửi employee
-                    await axios.post('http://localhost:8081/users/api/employees', {
+                    await axios.post('https://api.webtmdt.site/users/api/employees', {
                         firstName: this.form.firstName,
                         lastName: this.form.lastName,
                         email: this.form.email,
