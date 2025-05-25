@@ -52,6 +52,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">Danh sách Xuất Nhập Kho</h6>
 
                             <!--13.1.1 Người dùng nhấn nút "+ Thêm nhập kho"-->
+                            <!--13.1.2. Hệ thống gọi đến hàm openFormModal() trong mã script.-->
                             <button type="button" class="btn btn-success mb-3" x-on:click="openFormModal()">
                                 + Thêm nhập kho
                             </button>
@@ -106,7 +107,7 @@
                                     <input type="text" class="form-control" :value="form.createdByName" readonly>
                                 </div>
 
-                                <!-- 13.1.6 - Người dùng nhấn vào ô chọn nhà cung cấp và chọn nhà cung cấp từ dropdown. -->
+                                <!-- 13.1.7 - Người dùng nhấn vào ô chọn nhà cung cấp và chọn nhà cung cấp từ dropdown. -->
                                 <div class="col-md-4">
                                     <label class="form-label">Nhà cung cấp</label>
                                     <select class="form-control" x-model="form.supplierId" required>
@@ -117,7 +118,7 @@
                                     </select>
                                 </div>
 
-                                <!-- 13.1.7 Người dùng điền các thông tin: ngày nhập, ghi chú. -->
+                                <!-- 13.1.8 Người dùng điền các thông tin: ngày nhập, ghi chú. -->
                                 <div class="col-md-4">
                                     <label class="form-label">Ngày nhập</label>
                                     <input type="date" class="form-control" x-model="form.createdDate" required>
@@ -143,7 +144,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <!-- 13.1.10 Người dùng chọn sản phẩm từ dropdown và điền số lượng đơn giá, ghi chú cho sản phẩm. -->
+                                    <!-- 13.1.12 Người dùng chọn sản phẩm từ dropdown và điền số lượng đơn giá, ghi chú cho sản phẩm. -->
                                     <template x-for="(item, index) in form.products" :key="index">
                                         <tr>
                                             <td>
@@ -162,6 +163,7 @@
                                             <td><input type="text" class="form-control" x-model="item.note"></td>
                                             <td>
                                                 <!--13.2.1 Người dùng nhấn nút “Xóa” ở dòng sản phẩm muốn xóa-->
+                                                <!--13.2.2 Hệ thống gọi đến phương thức removeProduct()-->
                                                 <button type="button" class="btn btn-danger btn-sm"
                                                         @click="removeProduct(index)">X
                                                 </button>
@@ -172,13 +174,14 @@
                                 </table>
                             </div>
 
-                            <!-- 13.1.8 Người dùng nhấn nút “ + Thêm sản phẩm”.-->
+                            <!-- 13.1.9 Người dùng nhấn nút “ + Thêm sản phẩm”.-->
+                            <!-- 13.1.10 Hệ thống lắng nghe sự kiện click và gọi đến addProduct().-->
                             <button type="button" class="btn btn-secondary mt-2" @click="addProduct">+ Thêm sản phẩm
                             </button>
                         </div>
 
                         <div class="modal-footer">
-                            <!--13.1.11 Người dùng nhấn nút “Lưu”. -->
+                            <!--13.1.13 Người dùng nhấn nút “Lưu”. -->
                             <button type="submit" class="btn btn-primary">Lưu</button>
                             <button type="button" class="btn btn-secondary" @click="openModal = false">Đóng</button>
                         </div>
@@ -261,10 +264,12 @@
                         });
                 },
                 async openFormModal() {
-                    // 13.1.2 - Hiển thị form
+                    // 13.1.3. Hàm openFormModal() gán openModal = true,
+                    // hiển thị Modal chứa form nhập kho với các thành phần như người thực hiện,
+                    // nhà cung cấp, ngày nhập, ghi chú, nút thêm sản phẩm và bảng sản phẩm.
                     this.openModal = true;
 
-                    // 13.1.5 - Gán dữ liệu vào modal
+                    // 13.1.6 - Gán dữ liệu vào modal
                     this.loadSuppliers();
                     this.loadProducts();
                     this.form.createdBy = 1; // ví dụ mã người thực hiện
@@ -277,32 +282,33 @@
                     return today.toISOString().split('T')[0];
                 },
 
-                // 13.1.4. Hệ thống gọi SupplierController từ "https://api.webtmdt.site/stockIO/api/suppliers" để lấy danh sách nhà cung cấp.
+                // 13.1.5. Hàm loadSuppliers() trong trình duyệt gọi
+                // API GET https://api.webtmdt.site/stockIO/api/suppliers đến SupplierController để lấy danh sách nhà cung cấp.
                 loadSuppliers() {
                     axios.get('https://api.webtmdt.site/stockIO/api/suppliers')
                         .then(response => {
                             this.suppliers = response.data;
                         })
                 },
-                // 13.1.3 Hệ thống gọi ProductController từ "https://api.webtmdt.site/product/api/products" để lấy danh sách sản phẩm.
+                // 13.1.4 Hàm loadProducts() gọi
+                // API GET https://api.webtmdt.site/product/api/products đến ProductController để lấy danh sách sản phẩm.
                 loadProducts() {
                     axios.get('https://api.webtmdt.site/product/api/products')
                         .then(response => {
-
                             this.products = response.data;
                         })
                 },
 
-                // 13.1.9  - Hệ thống thêm một dòng mới vào bảng
+                // 13.1.12  - Hệ thống thêm một dòng mới vào bảng
                 addProduct() {
                     this.form.products.push({productId: '', quantity: 1, price: 0, note: ''});
                 },
-                // 13.2.2 Hệ thống loại bỏ dòng khỏi bảng sản phẩm.
+                // 13.2.3 Modal loại bỏ dòng khỏi bảng sản phẩm.
                 removeProduct(index) {
                     this.form.products.splice(index, 1);
                 },
 
-                // 13.1.12 Hệ thống gửi dữ liệu lên StockInController để tạo nhập kho mới.
+                // 13.1.14 Hệ thống gọi submitStockInForm() lấy dữ liệu từ form để gửi lên server.
                 submitStockInForm() {
                     const payload = {
                         createdBy: this.form.createdBy,
@@ -318,14 +324,14 @@
                     };
                     console.log(payload);
 
-                    // Gửi
+                    // 13.1.15 Hệ thống gửi dữ liệu lên StockInController để tạo nhập kho mới.
                     axios.post('https://api.webtmdt.site/stockIO/api/stock-in', payload)
                         .then(response => {
-                            //13.1.24 Thông báo “Nhập kho thành công”, đóng modal và tải lại danh sách nhập kho.
+                            //13.1.28 Thông báo “Nhập kho thành công”, đóng modal và tải lại danh sách nhập kho.
                             alert(response.data);
                             this.openModal = false;
                             this.fetchData();
-                            //13.1.25 Reset form ở modal.
+                            //13.1.29 Reset form ở modal.
                             this.resetForm();
                             this.error = '';
                         })

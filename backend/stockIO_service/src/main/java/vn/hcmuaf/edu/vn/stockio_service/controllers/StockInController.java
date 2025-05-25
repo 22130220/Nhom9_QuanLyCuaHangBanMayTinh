@@ -23,11 +23,12 @@ public class StockInController {
 
 
     @PostMapping
+    // 13.1.16 Ánh xạ thành lớp DTO
     public ResponseEntity<?> createStockIn(@RequestBody StockInDTO dto) {
         try{
-            // 13.1.13 StockInController gọi StockInService để tạo mới phiếu nhập kho
+            // 13.1.17 StockInController gọi StockInService để tạo mới phiếu nhập kho
             stockInService.createStockIn(dto);
-            // 13.1.23 StockInController trả về thông báo "Nhập kho thành công"
+            // 13.1.27 StockInController trả về thông báo "Nhập kho thành công"
             return ResponseEntity.ok("Nhập kho thành công");
 
 

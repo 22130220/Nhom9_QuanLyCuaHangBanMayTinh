@@ -23,7 +23,7 @@ public class StockInService {
 
     @Transactional
     public void createStockIn(StockInDTO dto) {
-        // 13.1.14 - Kiểm tra dữ liệu hợp lệ
+        // 13.1.18 - Kiểm tra dữ liệu hợp lệ
         if (dto.getItems() == null || dto.getItems().isEmpty()) {
             //13.3.0 – Khi không có sản phẩm nhập kho.
             //13.3.1 – StockInService trả về “Phải có ít nhất một sản phẩm”
@@ -40,14 +40,14 @@ public class StockInService {
                 throw new IllegalArgumentException("Đơn giá phải lớn hơn 0");
         }
 
-        // 13.1.15 - Tạo mới StockIn
+        // 13.1.19 - Tạo mới StockIn
         StockIn stockIn = new StockIn();
         stockIn.setCreater_id(dto.getCreaterID());
         stockIn.setSupplier_id(dto.getSupplierId());
         stockIn.setCreated_date(dto.getCreatedDate());
         stockIn.setNote(dto.getNote());
 
-        // 13.1.16 - Tạo các StockInItem
+        // 13.1.20 - Tạo các StockInItem
         List<StockInItem> items = new ArrayList<>();
         BigDecimal totalAmount = BigDecimal.ZERO;
 
@@ -60,20 +60,20 @@ public class StockInService {
             item.setStockIn(stockIn);
             items.add(item);
 
-            // 13.1.17 - Tính tổng tiền
+            // 13.1.21 - Tính tổng tiền
             BigDecimal itemTotal = itemDTO.getUnitPrice().multiply(BigDecimal.valueOf(itemDTO.getQuantity()));
             totalAmount = totalAmount.add(itemTotal);
         }
-        // 13.1.18 - Lưu tổng tiền vào StockIn
+        // 13.1.22 - Lưu tổng tiền vào StockIn
         stockIn.setTotal_amount(totalAmount);
 
-        // 13.1.19 - Gán danh sách StockInItem vào StockIn
+        // 13.1.23 - Gán danh sách StockInItem vào StockIn
         stockIn.setItems(items);
 
-        // 13.1.20 - Lưu StockIn vào DB
+        // 13.1.24 - Lưu StockIn vào DB
         stockInRepository.save(stockIn);
 
-        // 13.1.21 - Gọi InventoryService để cập nhật tồn kho
+        // 13.1.25 - Gọi InventoryService để cập nhật tồn kho
         for (StockInItem item : items) {
             inventoryService.increaseQuantity(item.getProductId(), item.getQuantity());
         }
