@@ -50,6 +50,8 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-between align-items-center">
                             <h6 class="m-0 font-weight-bold text-primary">Danh sách Xuất Nhập Kho</h6>
+
+                            <!--13.1.1 Người dùng nhấn nút "+ Thêm nhập kho"-->
                             <button type="button" class="btn btn-success mb-3" x-on:click="openFormModal()">
                                 + Thêm nhập kho
                             </button>
@@ -225,7 +227,7 @@
                     this.fetchData();
                 },
                 fetchData() {
-                    axios.get('http://localhost:8081/stockIO/api/stock-in')
+                    axios.get('https://api.webtmdt.site/stockIO/api/stock-in')
                         .then(response => {
                             const data = response.data;
 
@@ -275,16 +277,16 @@
                     return today.toISOString().split('T')[0];
                 },
 
-                // 13.1.4. Hệ thống gọi SupplierController từ "http://localhost:8081/stockIO/api/suppliers" để lấy danh sách nhà cung cấp.
+                // 13.1.4. Hệ thống gọi SupplierController từ "https://api.webtmdt.site/stockIO/api/suppliers" để lấy danh sách nhà cung cấp.
                 loadSuppliers() {
-                    axios.get('http://localhost:8081/stockIO/api/suppliers')
+                    axios.get('https://api.webtmdt.site/stockIO/api/suppliers')
                         .then(response => {
                             this.suppliers = response.data;
                         })
                 },
-                // 13.1.3 Hệ thống gọi ProductController từ "http://localhost:8081/product/api/products" để lấy danh sách sản phẩm.
+                // 13.1.3 Hệ thống gọi ProductController từ "https://api.webtmdt.site/product/api/products" để lấy danh sách sản phẩm.
                 loadProducts() {
-                    axios.get('http://localhost:8081/product/api/products')
+                    axios.get('https://api.webtmdt.site/product/api/products')
                         .then(response => {
 
                             this.products = response.data;
@@ -317,7 +319,7 @@
                     console.log(payload);
 
                     // Gửi
-                    axios.post('http://localhost:8081/stockIO/api/stock-in', payload)
+                    axios.post('https://api.webtmdt.site/stockIO/api/stock-in', payload)
                         .then(response => {
                             //13.1.24 Thông báo “Nhập kho thành công”, đóng modal và tải lại danh sách nhập kho.
                             alert(response.data);
@@ -328,7 +330,7 @@
                             this.error = '';
                         })
                         .catch(error => {
-                            // 13.5.3  -  13.3.3  -  13.4.4 – Thông báo lỗi ra modal.
+                            // 13.5.3  -  13.3.3  -  13.4.3 – Thông báo lỗi ra modal.
                             if (error.response && error.response.data && error.response.data.error) {
                                 this.error = error.response.data.error;
                             } else {
